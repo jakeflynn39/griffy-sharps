@@ -4,9 +4,10 @@ import random
 import matplotlib.pyplot as plt
 import numpy as np
 
-NUM_SIMS = 17384
+NUM_SIMS = 1000
 CSV_FILE = '4-6-2023.csv'
 NUM_PLOTS = 10
+NUM_TIMES_SIM = 10
 
 def main():
     bets = []
@@ -25,7 +26,7 @@ def main():
     num_positive_outcomes = 0
     num_bets = len(bets)
     for i in range(NUM_SIMS):
-        # print(i)
+        print(i)
         bankroll, data = sim(bets, i)
         bankrolls.append(bankroll)
         if bankroll > 0:
@@ -42,7 +43,7 @@ def main():
     bet_data = bet_data[bet_data['sim'] < NUM_PLOTS]
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3)
 
-    bet_data.set_index('bet_num').groupby('sim')['bankroll'].plot(ax = ax1)
+    #bet_data.set_index('bet_num').groupby('sim')['bankroll'].plot(ax = ax1)
     
 
     mean = np.mean(bankrolls)
@@ -78,7 +79,7 @@ def main():
 
     fig.set_size_inches(18.5, 10.5)
 
-    fig.suptitle(f'Break Even Percentage: {(break_even_per * 100):.2f}%\nNumber of Bets: {num_bets}')
+    fig.suptitle(f'Break Even Percentage: {(break_even_per * 100):.2f}%\nNumber of Bets: {num_bets * NUM_TIMES_SIM}')
 
     plt.show()
 
@@ -91,19 +92,20 @@ def american_to_percent (american):
 def sim(bets, sim_index):
     bankroll = 0
     datas = []
-    for bet_index, bet in enumerate(bets):
-        if bet['bet_type'] != "positive_ev":
-            continue
-        try:
-            prob = american_to_percent(float(bet['clv']))
-        except ValueError:
-            continue
-        rand = random.random()
-        if rand < prob:
-            bankroll += float(bet['payout']) - float(bet['stake'])
-        else:
-            bankroll -= float(bet['stake'])
-        datas.append({'sim': sim_index, 'bet_num': bet_index,'bankroll': bankroll})
+    for i in range(NUM_TIMES_SIM):
+        for bet_index, bet in enumerate(bets):
+            if bet['bet_type'] != "positive_ev":
+                continue
+            try:
+                prob = american_to_percent(float(bet['clv']))
+            except ValueError:
+                continue
+            rand = random.random()
+            if rand < prob:
+                bankroll += float(bet['payout']) - float(bet['stake'])
+            else:
+                bankroll -= float(bet['stake'])
+            datas.append({'sim': sim_index, 'bet_num': bet_index,'bankroll': bankroll})
     return bankroll, datas
 
 if __name__ == "__main__":
