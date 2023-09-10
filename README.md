@@ -1,6 +1,6 @@
 # Bet Simulation and Analysis
 
-This Python script allows you to simulate and analyze sports betting outcomes using historical data from a CSV file. It simulates a specified number of betting sessions and provides insights into your potential bankroll growth or decline based on the bets placed and their associated odds.
+This Python script allows you to simulate and analyze sports betting outcomes using historical data from a CSV file. It simulates a specified number of betting sessions and provides insights into your potential bankroll growth or decline based on the bets placed and their associated odds. It was initially made as a tool for my friend griffy to analyze his betting history and determine whether he was making profitable bets, who is a gambling sharp.
 
 ## Prerequisites
 
@@ -19,8 +19,9 @@ pip install pandas matplotlib numpy
 
 1. **Data Preparation:**
 
-   - Ensure you have a CSV file named `griffy_bet_history.csv` containing your historical betting data. Make sure the file includes columns like 'odds,' 'clv,' 'stake,' 'potential_payout,' and 'bet_type.'
+   - To use you own bets, make sure you have a csv containing your historical betting data. Make sure the file includes columns like 'odds,' 'clv,' 'stake,' 'potential_payout,' and 'bet_type.'
    - The script assumes that your CSV contains a 'bet_type' column with the values 'positive_ev' to identify bets with positive expected value.
+   - Replace the `BET_HISTORY_FILE` variable in the script with the path to your CSV file.
 
 2. **Command-line Arguments:**
 
