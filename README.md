@@ -32,7 +32,7 @@ pip install pandas matplotlib numpy
 Example command to run the script with custom parameters:
 
 ```bash
-python bet_simulation.py --s 5000 --r 10
+python griffy_sharps.py --s 5000 --r 10
 ```
 
 3. **Simulation Results:**
